@@ -49,15 +49,15 @@ node id. Another public variable is used as the root's index for the tree.
 **traverse(self, order = 'in_order')**
 *   Traverse through the nodes of the tree in different orders. The parameter order can take
     only three('pre_order', 'in_order', 'post_order') values. It returns a list with node 
-    indices according to the given order.
+    indices according to the given order. Root must be set prior to calling this function.
 
 **BinaryTree.__print__(self, order = 'in_order')**
 *   Prints the values of the nodes according to given order. The parameter order can take
     only three('pre_order', 'in_order', 'post_order') values like above.
 
-**BinaryTree.render(self, root_id, breadth = 0)**
-*   Prints the tree/branch started from the node with root_id. The parameter breadth is only
-    for printing purpose. It can take any value and shifts the tree diagram up to that value.
+**BinaryTree.__str__(self)**
+*   Prints the whole tree object. But like traverse function root must be set prior to calling
+    this function.   
 
 
 ## EXAMPLES
@@ -71,9 +71,6 @@ T = BinaryTree()
 
 #Creating a new node with the value 1. 
 root = T.new_node(1)
-
-#Set the root as new root
-T.set_root(root)
 
 #Creating a new node with value 2 and declare it a child of root
 left = T.new_node(2)
@@ -93,9 +90,11 @@ T.make_relation(right_left, rll, "left")
 rllr = T.new_node(7)
 T.make_relation(rll, rllr, "right")
 
+#Set the root as new root
+T.set_root(root)
 #Printing the tree in post order
 T.__print__('post_order')
 
-#Rendering Tree T:
-T.render(root)
+#Printing Tree T:
+print(T)
 ```
