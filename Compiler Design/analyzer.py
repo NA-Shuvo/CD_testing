@@ -1,28 +1,5 @@
 
-
-class Stack:
-
-    def __init__(self):
-        self.items = []
-
-    def isEmpty(self):
-        return (self.items == [])
-
-    def push(self, item):
-        self.items.append(item)
-
-    def pop(self):
-        return self.items.pop()
-
-    def top(self):
-        return self.items[len(self.items)-1]
-
-    def size(self):
-        return len(self.items)
-    
-    def __show__(self):
-        print(self.items)
-
+from dataStructure import BinaryTree, Stack
 
 precedence = {
     
@@ -58,38 +35,29 @@ def infix_to_postfix(infix):
 
 
 
-infix = input("Enter Infix Notation: ")
-output = "Resultant Postfix Notation: {}".format(infix_to_postfix(infix))
-print(output)
+
+def postfix_to_parse_tree(postfix):
+
+    T = BinaryTree()
+    stack = Stack()
+    parent = None
 
 
+    for current_symbol in postfix:
 
-from dataStructure import BinaryTree, Stack
+        if(current_symbol not in  operators):
+            leaf = T.new_node(current_symbol)
+            stack.push(leaf)
 
+        else:
+            parent = T.new_node(current_symbol)
+            right_child_id = stack.pop()
+            left_child_id = stack.pop()
+            T.make_relation(parent, left_child_id, "left")
+            T.make_relation(parent, right_child_id, "right") 
 
-operators = ['/', '*', '+', '-']
+            stack.push(parent)
 
-postfix = input()
+    T.set_root(parent)
 
-T = BinaryTree()
-stack = Stack()
-parent = None
-
-
-for current_symbol in postfix:
-
-    if(current_symbol not in  operators):
-        leaf = T.new_node(current_symbol)
-        stack.push(leaf)
-
-    else:
-        parent = T.new_node(current_symbol)
-        right_child_id = stack.pop()
-        left_child_id = stack.pop()
-        T.make_relation(parent, left_child_id, "left")
-        T.make_relation(parent, right_child_id, "right") 
-
-        stack.push(parent)
-
-T.set_root(parent)
-print(T)
+    return T
